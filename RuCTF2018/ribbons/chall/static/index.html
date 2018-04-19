@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ribbons</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.js"></script>
+
+    <link rel="stylesheet" href="./index.css"/>
+    <script src="./index.js"></script>
+</head>
+<body>
+<div class="ui fixed menu">
+    <div class="header item">Ribbons</div>
+</div>
+<div class="ui main container">
+    <div class="ui grid">
+        <div class="five wide column">
+            <div class="ui secondary vertical menu">
+                <h3 class="ui header">Channels</h3>
+                <div class="action-header">
+                    <h4 class="ui header ">
+                        Subscribed
+                    </h4>
+                    <button class="ui tiny icon button basic compact btn-subscribe">
+                        <i class="icon plus"></i>
+                    </button>
+                </div>
+                <div class="channels channels-subscribed" data-simplebar>
+                    <div class="channels-list">
+                    </div>
+                </div>
+                <div class="action-header">
+                    <h4 class="ui header ">
+                        Maintained
+                    </h4>
+                    <button class="ui tiny icon button basic compact btn-create">
+                        <i class="icon plus"></i>
+                    </button>
+                </div>
+                <div class="channels channels-maintained" data-simplebar>
+                    <div class="channels-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="eleven wide column column2">
+            <div class="owner-block">
+                <div class="owner-block-header">
+                    <div>
+                        <h5 class="ui header">
+                            <i class="user icon"></i>
+                            Channel owner
+                        </h5>
+                    </div>
+                    <div class="ui icon buttons">
+                        <button class="ui button basic btn-invite"><i class="linkify icon"></i></button>
+                        <button class="ui button basic btn-changePassword"><i class="key icon"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="posts" data-simplebar>
+                <div class="posts-list"></div>
+            </div>
+            <div class="ui divider"></div>
+            <div class="ui form add-post owner-block">
+                <div class="field">
+                    <textarea name="text" placeholder="Your post content"></textarea>
+                </div>
+                <div class="field">
+                    <input type="password" name="password" placeholder="Channel password">
+                </div>
+                <button class="ui button submit btn-addPost">Add post</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui modal tiny subscribe">
+    <div class="header">Subscribe to channel</div>
+    <div class="content">
+        <form class="ui form subscribe">
+            <div class="field">
+                <label>Channel invite</label>
+                <input type="text" name="invite">
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button positive">Subscribe</div>
+        <div class="ui cancel button">Cancel</div>
+    </div>
+</div>
+<div class="ui modal tiny create">
+    <div class="header">Create new channel</div>
+    <div class="content">
+        <form class="ui form create">
+            <div class="field">
+                <label>Channel name</label>
+                <input type="text" name="name">
+            </div>
+            <div class="field">
+                <label>Channel password</label>
+                <input type="password" name="password">
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button positive">Create</div>
+        <div class="ui cancel button">Cancel</div>
+    </div>
+</div>
+<div class="ui modal tiny invite">
+    <div class="header">Channel invite</div>
+    <div class="content">
+        <code class="invite-text"></code>
+    </div>
+    <div class="actions">
+        <div class="ui cancel button">Close</div>
+    </div>
+</div>
+<div class="ui modal tiny change-password">
+    <div class="header">Change password</div>
+    <div class="content">
+        <form class="ui form change-password">
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password">
+            </div>
+            <div class="field">
+                <label>New password</label>
+                <input type="password" name="new_password">
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui approve button positive">Change</div>
+        <div class="ui cancel button">Cancel</div>
+    </div>
+</div>
+</body>
+</html>

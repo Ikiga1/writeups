@@ -1,0 +1,71 @@
+.menu.fixed
+{
+    background-color: rgba(252, 215, 106, 0.91);
+}
+
+.main.container {
+    height: 100%;
+    padding: 90px 0 10px;
+}
+
+.ui.vertical.menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui.grid
+{
+    height: 100%;
+}
+
+.action-header,
+.ui.vertical.menu .item
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.btn-remove:not(:hover)
+{
+    color: rgba(117, 117, 117, 0.6)
+}
+
+.item:not(:hover) .btn-remove
+{
+    visibility: hidden;
+}
+
+.owner-block-header
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.owner-block
+{
+    display: none;
+}
+
+.invite-text
+{
+    word-break: break-all;
+}
+
+.simplebar-scrollbar:before
+{
+    background: gray;
+}
+
+.ui.grid>.column:not(.row).column2
+{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.action-header
+{
+    height: 30px;
+}

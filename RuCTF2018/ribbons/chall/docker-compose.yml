@@ -1,0 +1,11 @@
+version: '2.0'
+services:
+  ribbons:
+    build: .
+    ports:
+      - "4242:4242"
+    volumes:
+      - ./data:/home/ribbons/bin/data
+    restart: on-failure
+    mem_limit: 512m
+
