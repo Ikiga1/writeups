@@ -1,4 +1,6 @@
 import requests
+import random
+import string
 
 #Service is running on localhost
 TARGET = "127.0.0.1"
@@ -18,9 +20,12 @@ def add_post(channel_id, password, msg):
 def gen_string(size):
     return ''.join(random.choice(string.ascii_uppercase) for _ in range(size))
 
+def gen_flag(size):
+    return ''.join(random.choice(string.letters + string.digits) for _ in range(size)) + '='
+
 for i in range(0,150):
     name = gen_string(5)
     chan_id = add_channel(name,"a"*16)
     password = 'a'*16
-    add_post(new, password, "Would you like a flag, wouldn't you?" + gen_string(2))
-    add_post(new, password, "FLAG" + gen_string(8))
+    add_post(chan_id, password, "Would you like a flag, wouldn't you? " + gen_string(2))
+    add_post(chan_id, password, gen_flag(31))
