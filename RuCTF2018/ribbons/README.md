@@ -104,12 +104,8 @@ The idea was to:
 * Ask for their posts.
 * Decrypt them by using the algorithm that can be found [here](./chall/static/index.js) or in the binary.
 
-<<<<<<< HEAD
-#### Overcoming Problems
 
-=======
 #### Overcoming problems
->>>>>>> 8a4b41f605a8c9a02e7107b5a7f80d3c8991d6c1
 To overcome those problems I mentioned above I've found the following solutions:  
 
 * To defeat ```strlen()``` it is possible to read the heap in steps of 128, aligning memory to the 8th Byte thus avoiding writing 0s.
