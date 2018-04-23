@@ -104,7 +104,12 @@ The idea was to:
 * Ask for their posts.
 * Decrypt them by using the algorithm that can be found [here](./chall/static/index.js) or in the binary.
 
+<<<<<<< HEAD
+#### Overcoming Problems
+
+=======
 #### Overcoming problems
+>>>>>>> 8a4b41f605a8c9a02e7107b5a7f80d3c8991d6c1
 To overcome those problems I mentioned above I've found the following solutions:  
 
 * To defeat ```strlen()``` it is possible to read the heap in steps of 128, aligning memory to the 8th Byte thus avoiding writing 0s.
@@ -113,8 +118,8 @@ To overcome those problems I mentioned above I've found the following solutions:
 
 
 * Since I want to search for channels, I need to recognize them.
-The size of an allocated channel is **0xb5**:  
-I can search inside those 128B of leak, other mini-chunks of 8 Bytes that are equal to 0xb5.  
+The size of an allocated channel is **0x45**:  
+I can search inside those 128B of leak, other mini-chunks of 8 Bytes that are equal to 0x45.  
 
 That way I know when I'm watching a channel structure and I can find ids and passwords!
 
@@ -123,8 +128,7 @@ That way I know when I'm watching a channel structure and I can find ids and pas
 You can find my exploit here [exploit.py](./exploit.py).  
 It could certainly be improved, but it worked and that's how I wrote it during the competition (and the flight). I wanted to keep it like that, so I just rearranged the code a bit and added some comments :)  
 
-I suggest you running [bot.py](./bot.py) to create some channels, then I would restart the service and run the exploit.  
-The way I read the memory in this exploit is such that once you run the exploit you get the flags and the other time you do it you make the service *segfaults*, causing a kind of a *DoS* (even though Docker mitigates it).
+I suggest you running [bot.py](./bot.py) one or two times to create some channels, then I would restart the service and run the exploit.  
 
 ## Extras
 I came across this challenge while playing RuCTF Finals 2018 with Tower of Hanoi team in Ekaterinburg. I really enjoied the CTF and this challenge in particular!  
