@@ -53,8 +53,15 @@ I started searching for functions related to the requests.
 Inside the bss section we can find pointers to functions that are used to accomplish what the requests ask for.
 After reversing most of them, there seems to be an overflow in the ```change_password()``` method.  
 In fact, once the check over the old password is completed, a ```memcpy()``` of size ```strlen()``` of the new password is performed on the ```channel->password``` field.  
-It seems like it's possible to overwrite some bytes of the key address!
 ![alt text](./images/change_password.png)
+
+If I try to change password using the web interface, javascript stops me.
+![alt text](./images/change_password_web.png)  
+But if we have a look at how the request is processed by the service we notice it takes 0x14 (aka 20) Bytes from the password field instead of 0x10!  
+![alt text](./images/process_request.png)  
+
+It seems like it's possible to overwrite some bytes of the key address!
+
 
 
 ## Patch
@@ -117,7 +124,36 @@ To overcome those problems I mentioned above I've found the following solutions:
 The size of an allocated channel is **0x45**:  
 I can search inside those 128B of leak, other mini-chunks of 8 Bytes that are equal to 0x45.  
 
-That way I know when I'm watching a channel structure and I can find ids and passwords!
+In fact, the size of a channel is ```20+4+16+8+8 = 56```. That means malloc will allocate a chunk of size ```64 = 0x40``` and will set the last 3 bits as 101:
+* 1: Chunk not allocated in main arena, each thread that spawns has its own arena.
+* 0: Chunk is not obtained through ```mmap()```.
+* 1: Prev in Use bit means that the chunk above is allocated (ok, if you see the exploit I could be watching a freed chunk... but the exploit returned enough channel and posts, I assumed my ```view()```s helped me having all the new chunks near to each other)  
+
+Just remember the struct of a m-allocated chunk is as follows:  
+```
+    chunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |             Size of previous chunk, if unallocated (P clear)  |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |             Size of chunk, in bytes                     |A|M|P|
+      mem-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |             User data starts here...                          .
+            .                                                               .
+            .             (malloc_usable_size() bytes)                      .
+            .                                                               |
+nextchunk-> +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |             (size of chunk, but used for application data)    |
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |             Size of next chunk, in bytes                |A|0|1|
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+```
+You can find more explanations [here](https://heap-exploitation.dhavalkapil.com/diving_into_glibc_heap/malloc_chunk.html).
+
+So, here's how the chunks I'm searching for look like:
+![alt text](./images/legenda.png)
+![alt text](./images/channel_dump.png)
+
+
+Now I know when I'm watching a channel structure and I can find ids and passwords!
 
 
 #### Implementation
