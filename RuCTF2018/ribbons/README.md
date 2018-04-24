@@ -1,5 +1,11 @@
 # Ribbons
 ![alt text](./images/ribbons.png)
+This challenge was about an online chat/forum written in C.  
+You can find all the files of the challenge in [chall](./chall).  
+Every channel had a key: posts were encrypted and the only way you can get the key is by invitation or by beeing the owner of the channel (aka knowing id and password of the channel).  
+Our goal was to retrieve the posts the bot was writing in channels he owned.  
+And, so sadly, we got no invitations... :(
+
 ## Interaction and Reversing
 We were given a **data** folder, a **static** folder and an ELF 64-bit executable, called **ribbons**.  
 I immediately started by having a glance at how the site looked like and I tried to interact a bit!
@@ -162,7 +168,7 @@ It could certainly be improved, but it worked and that's how I wrote it during t
 
 I suggest you running [bot.py](./bot.py) one or two times to create some channels, then I would restart the service and run the exploit.  
 
-## Extras
+## Extras and Curiosities
 I came across this challenge while playing RuCTF Finals 2018 with Tower of Hanoi team in Ekaterinburg. I really enjoied the CTF and this challenge in particular!  
 I had a look at this service with my friend, and teammate, *marcof* who helped me a lot brainstorming for the exploit and figuring out how to interact with the service.  
  
@@ -177,4 +183,4 @@ I finished the exploit duringh the flight on my way back, just for fun.
 In any way I was happy I realized very soon how the challenge worked and patched the binary before Bushwhackers began to attack! (Damn, I forgot to build the container and we lost 2 flags... lol)  
 Hope you enjoyed the write-up!
 
-Kudos to the Bushwhackers who did a real good job on that challenge during the competition! :)
+Kudos to the Bushwhackers who did a real good job on that challenge during the competition, beeing the only team who exploited the service! :)
