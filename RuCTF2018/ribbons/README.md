@@ -169,7 +169,7 @@ It could certainly be improved, but it worked and that's how I wrote it during t
 I suggest you running [bot.py](./bot.py) one or two times to create some channels, then I would restart the service and run the exploit.  
 
 ## Extras and Curiosities
-I came across this challenge while playing RuCTF Finals 2018 with Tower of Hanoi team in Ekaterinburg. I really enjoied the CTF and this challenge in particular!  
+I came across this challenge while playing RuCTF Finals 2018 with Tower of Hanoi team in Ekaterinburg. I really enjoyed the CTF and this challenge in particular!  
 I had a look at this service with my friend, and teammate, *marcof* who helped me a lot brainstorming for the exploit and figuring out how to interact with the service.  
  
   
