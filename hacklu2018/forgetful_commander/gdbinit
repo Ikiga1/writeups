@@ -1,0 +1,16 @@
+file forgetful_commander
+
+b *0x56562000
+
+
+start AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+hbreak *0x56557267
+
+commands 2
+	silent
+	printf "%c", $ecx
+	c
+end
+
+c
