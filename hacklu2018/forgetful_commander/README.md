@@ -6,7 +6,7 @@ You've already dumped the binary, which checks the password. Now you just have t
 
 
 ## Reversing
-### At a First Glance
+### At a First Glance
 The first thing I usually do when I start reversing a binary is... Well... Just running it!  
 Sadly, running the program does not give out any clue on its behaviour: it terminates with exit code 1, no outputs.  
 Let's start digging into the binary by running a checksec to see what we are dealing with.  
@@ -40,7 +40,7 @@ To analyze it better I decide to produce a gdb core dump and load it into IDA.
 
 Until this moment no input has been read. If we let the program continue it terminates without requiring any input: my bet is that our chance to change the behaviour of the program is via the args.  
 
-I run the program with `argv[1]="pippopippo"` and set a read watchpoint (`rwatch address`) on my argument to see whether is ever read or not.  
+I run the program with `argv[1]="pippopippo"` and set a read watchpoint (`rwatch address`) on the argument to see whether is ever read or not.  
 The watchpoint stops the execution inside the libc and at the instruction `0x56557219` where the letter 'p' is loaded in `ecx`. Bingo, isn't it?  
 Having a look in IDA reveals the following:
 ```asm
