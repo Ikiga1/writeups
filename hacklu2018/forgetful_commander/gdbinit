@@ -1,16 +1,21 @@
+#load the file to be debugged
 file forgetful_commander
 
+#set a breakpoint at the beginning of the .text
 b *0x56562000
 
-
+#start the program with a bunch of A as argv[1]
 start AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
+#set a hardware breakpoint at the cmp instruction
 hbreak *0x56557267
 
+#define a list of commands to be executed when the second breakpoint is triggered
 commands 2
-	silent
-	printf "%c", $ecx
-	c
+	silent					#no gdb output
+	printf "%c", $ecx 		#print the content of ecx as a character
+	c 						#continue
 end
 
+#continue the execution after the first breakpoint
 c

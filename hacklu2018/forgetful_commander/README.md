@@ -1,7 +1,9 @@
 # Forgetful Commander
 And you lost a key again. This time it's the key to your missiles command station.  
 However, the command station got a silent password override. Even though your memory isn't that good, you don't remember the password either, your technical skills are!  
-You've already dumped the binary, which checks the password. Now you just have to reverse it!
+You've already dumped the binary, which checks the password. Now you just have to reverse it!  
+[Forgetful Commander](forgetful_commander)
+
 
 ## Reversing
 ### At a First Glance
@@ -77,6 +79,7 @@ load:56557269 0F 85 09 00 00+                jnz     loc_56557278
 
 But wait, there is some sort of anti-debugging stuff in here!  
 The piece of code between the `pushf` and the `popf` essencially checks whether you are stepping through the code one instruction at a time by checking if the `0x100 TRAP flag` is set.  
+If you want to know more on what the [trap flag](https://en.wikipedia.org/wiki/Trap_flag) is here's a brief explaination.  
 If you are going in the single-step mode, the conditional move `cmovz` will be done and the content of `edx` would be overwritten by `ecx`, changing the value stored in `[ebp-18h]` and the value of `ecx` in the `cmp` instruction.  
 A simple way to avoid this anti-debugging technique is executing `set $edx=$eax` after the conditional move is executed. Another simple way, which I like best, is to place a breakpoint on the compare instruction (`hbreak *0x56557267`) and continue the execution without stepping instruction after instruction \0/.  
 If you manage to fool the anti-debugging trick here's how the registers look like at the very moment of the `cmp` instruction.
@@ -88,20 +91,26 @@ WOW! `ecx` is 0x66, it's the f of flag!
 The program cycles over the argument comparing each byte of the input with the corresponding one of the flag, in plaintext.  
 We can dump all the chars of the flag writing a gdbinit like the following one:
 ```
+#load the file to be debugged
 file forgetful_commander
 
+#set a breakpoint at the beginning of the .text
 b *0x56562000
 
+#start the program with a bunch of A as argv[1]
 start AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
+#set a hardware breakpoint at the cmp instruction
 hbreak *0x56557267
 
+#define a list of commands to be executed when the second breakpoint is triggered
 commands 2
-	silent
-	printf "%c", $ecx
-	c
+	silent					#no gdb output
+	printf "%c", $ecx 		#print the content of ecx as a character
+	c 						#continue
 end
 
+#continue the execution after the first breakpoint
 c
 ```
 Running `gdb -x gdbinit` will print the whole flag and some rubbish... :P
