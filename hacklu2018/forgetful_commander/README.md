@@ -80,7 +80,7 @@ load:56557269 0F 85 09 00 00+                jnz     loc_56557278
 But wait, there is some sort of anti-debugging stuff in here!  
 The piece of code between the `pushf` and the `popf` essencially checks whether you are stepping through the code one instruction at a time by checking if the `0x100 TRAP flag` is set.  
 If you want to know more on what the [trap flag](https://en.wikipedia.org/wiki/Trap_flag) is here's a brief explaination.  
-If you are going in the single-step mode, the conditional move `cmovz` will be done and the content of `edx` would be overwritten by `ecx`, changing the value stored in `[ebp-18h]` and the value of `ecx` in the `cmp` instruction.  
+If you are executing in single-step mode, the conditional move `cmovz` will be done and the content of `edx` would be overwritten by `ecx`, changing the value stored in `[ebp-18h]` and the value of `ecx` in the `cmp` instruction.  
 A simple way to avoid this anti-debugging technique is executing `set $edx=$eax` after the conditional move is executed. Another simple way, which I like best, is to place a breakpoint on the compare instruction (`hbreak *0x56557267`) and continue the execution without stepping instruction after instruction \0/.  
 If you manage to fool the anti-debugging trick here's how the registers look like at the very moment of the `cmp` instruction.
 ![alt text](./images/cmp.png)  
